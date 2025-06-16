@@ -1,5 +1,6 @@
 import { createUser, getUserByUserName } from "../services/user.service.js";
 import { hashPassword, verifyPassword } from "../utils/hash.js";
+import { signToken } from "../utils/token.js";
 
 export const renderSignInPage = (req, res) => {
   try {
@@ -31,6 +32,15 @@ export const signin = async (req, res) => {
 
     if (!isVerified) return res.status(400).send("Wrong Password");
 
+    const data = {
+      id: user.id,
+      userName: user.userName,
+      name: user.name,
+      email: user.email,
+    };
+
+    const token = await signToken({ data, time: "1m" });
+    res.cookie("access_token", token);
     res.status(200).redirect("/");
   } catch (err) {
     return res.status(404).send("Something went wrong");
