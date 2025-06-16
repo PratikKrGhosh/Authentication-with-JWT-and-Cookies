@@ -66,3 +66,16 @@ export const register = async (req, res) => {
     return res.status(404).send("Something Went Wrong");
   }
 };
+
+export const logout = (req, res) => {
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.status(400).send("You need to Log in first to be Loggd out");
+    }
+    res.clearCookie("access_token");
+    return res.status(200).redirect("/");
+  } catch (err) {
+    return res.status(400).send("Something went wrong");
+  }
+};

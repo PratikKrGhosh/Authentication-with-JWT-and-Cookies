@@ -13,4 +13,6 @@ authRouter
   .get(authController.renderRegisterPage)
   .post(authController.register);
 
+authRouter.route("/logout").get(authController.logout);
+
 export default authRouter;
