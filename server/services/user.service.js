@@ -2,11 +2,11 @@ import { eq } from "drizzle-orm";
 import db from "../config/db.js";
 import { usersTable } from "../drizzle/schema.js";
 
-export const createUser = async ({ userName, name, email, password }) => {
+export const createUser = async ({ userName, name, email, hashedPassword }) => {
   try {
     return await db
       .insert(usersTable)
-      .values({ userName, name, email, password });
+      .values({ userName, name, email, password: hashedPassword });
   } catch (err) {
     return null;
   }
