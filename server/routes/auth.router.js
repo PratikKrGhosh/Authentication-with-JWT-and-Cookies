@@ -3,7 +3,14 @@ import * as authController from "../controllers/auth.controller.js";
 
 const authRouter = express.Router();
 
-authRouter.get("/sign", authController.renderSignInPage);
-authRouter.get("/register", authController.renderRegisterPage);
+authRouter
+  .route("/sign")
+  .get(authController.renderSignInPage)
+  .post(authController.signin);
+
+authRouter
+  .route("/register")
+  .get(authController.renderRegisterPage)
+  .post(authController.register);
 
 export default authRouter;
